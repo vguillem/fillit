@@ -13,7 +13,7 @@ int		ft_check_form(char *buf, int pos, int i)
 	return (1);
 }
 
-int		ft_check_one_tetri(char *buf, int pos, int i, int tetriminos)
+int		ft_check_one_tetri(char *buf, int pos, int i, int tetri)
 {
 	int		htag;
 
@@ -34,7 +34,7 @@ int		ft_check_one_tetri(char *buf, int pos, int i, int tetriminos)
 			}
 			htag++;
 		}
-		if (buf[pos] && ((pos - tetriminos + 1) % 5 == 0 || (pos + 1)  % 21 == 0))
+		if (buf[pos] && ((pos - tetri + 1) % 5 == 0 || (pos + 1)  % 21 == 0))
 		{
 			if (buf[pos] != '\n')
 			{
@@ -48,23 +48,23 @@ int		ft_check_one_tetri(char *buf, int pos, int i, int tetriminos)
 	return (htag);
 }
 
-int		ft_check_tetriminos(char *buf, int fillitnb)
+int		ft_check_tetri(char *buf, int nbtetri)
 {
-	int		tetriminos;
+	int		tetri;
 	int		i;
 	int		pos;
 
 	pos = 0;
-	tetriminos = 0;
-	while (fillitnb > tetriminos)
+	tetri = 0;
+	while (tetri < nbtetri)
 	{
 		i = 0;
-		if (ft_check_one_tetri(buf, pos, i, tetriminos) != 4)
+		if (ft_check_one_tetri(buf, pos, i, tetri) != 4)
 		{
 			ft_putstr("HTAG\n");
 			return (0);
 		}
-		tetriminos++;
+		tetri++;
 		pos = pos + 21; 
 	}
 	return (1);
@@ -72,12 +72,11 @@ int		ft_check_tetriminos(char *buf, int fillitnb)
 
 
 
-char	***ft_check_fillit(int ac, char **av)
+char	***ft_check_fillit(int ac, char **av, int *nbtetri)
 {
 	int		fd;
 	int		ret;
 	char	buf[548];
-	int		nbtetri;
 	char	***tab;
 
 	if (ac != 2)
@@ -95,19 +94,18 @@ char	***ft_check_fillit(int ac, char **av)
 		ft_putstr("Error longueur fichier");
 		return (NULL);
 	}
-	nbtetri = (ret + 1) / 21;
-	if (!(tab = ft_memalloc(sizeof(char *) * (nbtetri + 1))))
+	*nbtetri = (ret + 1) / 21;
+	if (!(tab = ft_memalloc(sizeof(char *) * (*nbtetri + 1))))
 	{
 		ft_putstr("Error malloc");
 		return (NULL);
 	}
-	ft_putnbr(nbtetri);
-	if (!(ft_check_tetriminos(buf, nbtetri)))
+	if (!(ft_check_tetri(buf, *nbtetri)))
 	{
 		ft_putstr("Error fichier non conforme");
 		return (NULL);
 	}
-	if (!(tab = ft_create_tetri(tab, buf, nbtetri)))
+	if (!(tab = ft_create_tetri(tab, buf)))
 		return (NULL);
 	return (tab);
 }
