@@ -10,5 +10,6 @@
 
 char	***ft_check_fillit(int ac, char **av, int *nbtetri);
 char	***ft_create_tetri(char ***tab, char *buf);
+int		ft_solver(char ***tab, int nbtetri);
 
 #endif
