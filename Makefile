@@ -13,15 +13,20 @@
 NAME = fillit
 FLAGS = -Wall -Wextra -Werror
 CC = gcc
-SRCS =				\
+SRCS =				main.c \
+					check.c \
+					create.c \
+
+
+INCLUDE =	fillit.h \
+			libft/libft.h
 
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rc $(NAME) $(OBJS)
-	ranlib $(NAME)
+	$(CC) $(FLAGS) $(OBJS) -L libft/ -lft -o $(NAME)
 
 %.o: %.c
 	$(CC) $(FLAGS) $? -c -o $@
