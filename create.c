@@ -1,29 +1,42 @@
 #include "fillit.h"
 
-char	***ft_create_tetri(char ***tab, char *buf)
+char	***ft_create_tetri(char ***tab, char *buf, int pos, int notetri)
+{
+	int		line;
+	int		i;
+
+		line = 0;
+		while (line++ < 4)
+		{
+			if (!(tab[notetri][line] = (char *)ft_memalloc(sizeof(char) * 5)))
+				return (NULL);
+			i = 0;
+			while (i < 4)
+			{
+				if (buf[pos++] == '#')
+					tab[notetri][line][i++] = 'A' + notetri;
+				else
+					tab[notetri][line][i++] = '.';
+			}
+			pos++;
+		}
+	return (tab);
+}
+
+char	***ft_create_tetris(char ***tab, char *buf, int nbtetri)
 {
 	int		pos;
 	int		notetri;
-	int		i;
-	int		line;
 
 	notetri = 0;
 	pos = 0;
-	while (buf[pos])
+	while (notetri < nbtetri)
 	{
-		tab[notetri] = (char **)ft_memalloc(sizeof(char *) * 5);
-		line = 0;
-		while (line < 4)
-		{
-			tab[notetri][line] = (char *)ft_memalloc(sizeof(char) * 5);
-			i = 0;
-			while (i < 4)
-				tab[notetri][line][i++] = buf [pos++];
-			pos++;
-			tab[notetri][line++][i] = '\0';
-		}
-		tab[notetri][line] = '\0';
-		pos++;
+		if(!(tab[notetri] = (char **)ft_memalloc(sizeof(char *) * 5)))
+			return (NULL);
+		if (!(ft_create_tetri(tab, buf, pos, notetri)))
+			return (NULL);
+		pos += 21;
 		notetri++;
 	}
 	return (tab);

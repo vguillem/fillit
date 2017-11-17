@@ -2,39 +2,43 @@
 
 int		ft_check_form(char *buf, int pos, int i)
 {
+	int		link;
+
+	link = 0;
 	if (i + 5 < 20 && buf[pos + 5] == '#')
-		return (0);
+		link++;
 	if (i + 1 < 20 && buf[pos + 1] == '#')
-		return (0);
+		link++;
 	if (i != 0 && buf[pos - 1] == '#')
-		return (0);
+		link++;
 	if (i > 4 && buf[pos - 5] == '#')
-		return (0);
-	return (1);
+		link++;
+	return (link);
 }
 
 int		ft_check_one_tetri(char *buf, int pos, int i, int tetri)
 {
 	int		htag;
+	int		link;
+	int		tmp;
 
 	htag = 0;
-	while (i < 21)
+	link = 0;
+	while (i < 20)
 	{
-		if (buf[pos] && buf[pos] != '.' && buf[pos] != '#' && buf[pos] != '\n')
+		if (buf[pos] != '.' && buf[pos] != '#' && buf[pos] != '\n')
 		{
 			ft_putstr("le caractere est :");
 			return (0);
 		}
 		if (buf[pos] == '#')
 		{
-			if (ft_check_form(buf, pos, i))
-			{
-				ft_putstr("form\n");
+			if (!(tmp = ft_check_form(buf, pos, i)))
 				return (0);
-			}
+			link += tmp;
 			htag++;
 		}
-		if (buf[pos] && ((pos - tetri + 1) % 5 == 0 || (pos + 1)  % 21 == 0))
+		if (buf[pos] && ((pos - tetri + 1) % 5 == 0))
 		{
 			if (buf[pos] != '\n')
 			{
@@ -45,6 +49,8 @@ int		ft_check_one_tetri(char *buf, int pos, int i, int tetri)
 		pos++;
 		i++;
 	}
+	if (link != 6 && link != 8)
+		return (0);
 	return (htag);
 }
 
@@ -65,6 +71,8 @@ int		ft_check_tetri(char *buf, int nbtetri)
 			return (0);
 		}
 		tetri++;
+		if (buf[pos + 20] && buf[pos + 20] != '\n')
+			return (0);
 		pos = pos + 21; 
 	}
 	return (1);
@@ -105,7 +113,7 @@ char	***ft_check_fillit(int ac, char **av, int *nbtetri)
 		ft_putstr("Error fichier non conforme");
 		return (NULL);
 	}
-	if (!(tab = ft_create_tetri(tab, buf)))
+	if (!(tab = ft_create_tetris(tab, buf, *nbtetri)))
 		return (NULL);
 	return (tab);
 }

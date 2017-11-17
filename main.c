@@ -11,5 +11,5 @@ int		main(int ac, char **av)
 		ft_putstr("error\n");
 		return (0);
 	}
-	ft_solver(tab, &nbtetri);
+	//ft_solver(tab, &nbtetri);
 }
