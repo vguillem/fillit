@@ -6,21 +6,23 @@
 #    By: vguillem <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 18:55:19 by vguillem          #+#    #+#              #
-#    Updated: 2017/11/12 11:40:11 by vguillem         ###   ########.fr        #
+#    Updated: 2017/11/18 18:20:56 by vguillem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 FLAGS = -Wall -Wextra -Werror
 CC = gcc
-SRCS =				main.c \
-					check.c \
-					create.c \
-					solver.c \
-					map.c \
+SRCS =				rendu/main.c \
+					rendu/check.c \
+					rendu/create.c \
+					rendu/solver.c \
+					rendu/map.c \
+					rendu/print.c \
+					rendu/free.c \
 
 
-INCLUDE =	fillit.h \
+INCLUDE =	rendu/fillit.h \
 			libft/libft.h
 
 OBJS = $(SRCS:.c=.o)
