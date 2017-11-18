@@ -16,6 +16,8 @@ CC = gcc
 SRCS =				main.c \
 					check.c \
 					create.c \
+					solver.c \
+					map.c \
 
 
 INCLUDE =	fillit.h \

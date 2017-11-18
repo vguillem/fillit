@@ -5,8 +5,8 @@ char	***ft_create_tetri(char ***tab, char *buf, int pos, int notetri)
 	int		line;
 	int		i;
 
-		line = 0;
-		while (line++ < 4)
+		line = -1;
+		while (line++ < 3)
 		{
 			if (!(tab[notetri][line] = (char *)ft_memalloc(sizeof(char) * 5)))
 				return (NULL);
@@ -32,7 +32,7 @@ char	***ft_create_tetris(char ***tab, char *buf, int nbtetri)
 	pos = 0;
 	while (notetri < nbtetri)
 	{
-		if(!(tab[notetri] = (char **)ft_memalloc(sizeof(char *) * 5)))
+		if(!(tab[notetri] = (char **)ft_memalloc(sizeof(char *) * 4)))
 			return (NULL);
 		if (!(ft_create_tetri(tab, buf, pos, notetri)))
 			return (NULL);
