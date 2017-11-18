@@ -6,7 +6,7 @@
 /*   By: vguillem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 17:24:13 by vguillem          #+#    #+#             */
-/*   Updated: 2017/11/18 21:03:09 by vguillem         ###   ########.fr       */
+/*   Updated: 2017/11/18 21:12:09 by vguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,4 @@ int		main(int ac, char **av)
 	}
 	ft_solver(tab, nbtetri);
 	return (1);
-}
+}//close le reade 
