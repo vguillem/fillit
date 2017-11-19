@@ -6,7 +6,7 @@
 /*   By: vguillem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 17:23:53 by vguillem          #+#    #+#             */
-/*   Updated: 2017/11/18 17:49:03 by vguillem         ###   ########.fr       */
+/*   Updated: 2017/11/19 13:36:32 by vguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		ft_check_one_tetri(char *buf, int pos, int i, int tetri)
 
 	htag = 0;
 	link = 0;
-	while (i < 20)
+	while (++i < 20)
 	{
 		if (buf[pos] != '.' && buf[pos] != '#' && buf[pos] != '\n')
 			return (0);
@@ -46,20 +46,16 @@ int		ft_check_one_tetri(char *buf, int pos, int i, int tetri)
 				return (0);
 			link += tmp;
 		}
-		if (buf[pos] && ((pos - tetri + 1) % 5 == 0))
-		{
-			if (buf[pos] != '\n')
-				return (0);
-		}
+		if (buf[pos] && ((pos - tetri + 1) % 5 == 0) && buf[pos] != '\n')
+			return (0);
 		pos++;
-		i++;
 	}
 	if (link != 6 && link != 8)
 		return (0);
 	return (htag);
 }
 
-int		ft_check_tetri(char *buf, int nbtetri)
+int		ft_check_tetri(char *buf, t_map *tmap)
 {
 	int		tetri;
 	int		i;
@@ -67,9 +63,9 @@ int		ft_check_tetri(char *buf, int nbtetri)
 
 	pos = 0;
 	tetri = 0;
-	while (tetri < nbtetri)
+	while (tetri < tmap->nbtetri)
 	{
-		i = 0;
+		i = -1;
 		if (ft_check_one_tetri(buf, pos, i, tetri) != 4)
 			return (0);
 		tetri++;
@@ -80,7 +76,7 @@ int		ft_check_tetri(char *buf, int nbtetri)
 	return (1);
 }
 
-char	***ft_check_fillit(char **av, int *nbtetri)
+char	***ft_check_fillit(char **av, t_map *tmap)
 {
 	int		fd;
 	int		ret;
@@ -92,14 +88,16 @@ char	***ft_check_fillit(char **av, int *nbtetri)
 		return (NULL);
 	ret = read(fd, buf, 547);
 	buf[ret] = '\0';
+	if (close(fd) == -1)
+		return (NULL);
 	if (ret == 547 || (ret + 1) % 21 != 0)
 		return (NULL);
-	*nbtetri = (ret + 1) / 21;
-	if (!(tab = ft_memalloc(sizeof(char *) * (*nbtetri + 1))))
+	tmap->nbtetri = (ret + 1) / 21;
+	if (!(tab = ft_memalloc(sizeof(char *) * (tmap->nbtetri + 1))))
 		return (NULL);
-	if (!(ft_check_tetri(buf, *nbtetri)))
+	if (!(ft_check_tetri(buf, tmap)))
 		return (NULL);
-	if (!(tab = ft_create_tetris(tab, buf, *nbtetri)))
+	if (!(tab = ft_create_tetris(tab, buf, tmap->nbtetri)))
 		return (NULL);
 	return (tab);
 }

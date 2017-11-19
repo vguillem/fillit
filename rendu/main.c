@@ -6,7 +6,7 @@
 /*   By: vguillem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 17:24:13 by vguillem          #+#    #+#             */
-/*   Updated: 2017/11/18 21:12:09 by vguillem         ###   ########.fr       */
+/*   Updated: 2017/11/19 08:45:06 by vguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 int		main(int ac, char **av)
 {
-	int		nbtetri;
 	char	***tab;
+	t_map	tmap;
 
 	if (ac != 2)
 	{
 		ft_usage();
 		return (0);
 	}
-	nbtetri = 0;
-	if (!(tab = ft_check_fillit(av, &nbtetri)))
+	tmap.nbtetri = 0;
+	if (!(tab = ft_check_fillit(av, &tmap)))
 	{
 		ft_putstr("error\n");
 		return (0);
 	}
-	ft_solver(tab, nbtetri);
+	ft_solver(tab, &tmap);
 	return (1);
-}//close le reade 
+}

@@ -6,7 +6,7 @@
 /*   By: vguillem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 17:39:32 by vguillem          #+#    #+#             */
-/*   Updated: 2017/11/18 20:34:57 by vguillem         ###   ########.fr       */
+/*   Updated: 2017/11/19 13:41:11 by vguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,16 @@ typedef struct	s_pos
 	int		j;
 	int		iref;
 }				t_pos;
-
-char			***ft_check_fillit(char **av, int *nbtetri);
+typedef struct	s_map
+{
+	int		nbtetri;
+	int		notetri;
+	int		sizemap;
+}				t_map;
+char			***ft_check_fillit(char **av, t_map *tmap);
 char			***ft_cre_tetri(char ***tab, char *buf, int pos, int notetri);
 char			***ft_create_tetris(char ***tab, char *buf, int nbtetri);
-int				ft_solver(char ***tab, int nbtetri);
+int				ft_solver(char ***tab, t_map *tmap);
 char			**ft_createmap(int	sizemap);
 int				ft_mapsize(int nbtetri);
 char			**ft_savemap(char **map, int sizemap);
@@ -38,5 +43,6 @@ void			ft_printmap(char **map, int sizemap);
 void			ft_remap(char **map, char **savemap, int sizemap);
 void			ft_usage();
 void			ft_freemap(char **map, int sizemap);
+void			ft_freetab(char ***tab, int nbtetri);
 
 #endif
